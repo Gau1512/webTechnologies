@@ -1,0 +1,70 @@
+<html>
+<head>
+<script>
+    function Order(num, cnm, bdt, sdt, to) {
+        this.num = num;
+        this.cnm = cnm;
+        this.bdt = bdt;
+        this.sdt = sdt;
+        this.to = to;
+    }
+
+    function customerName() {
+        var name = document.getElementById("cnm").value;
+        if (name.length < 5 || name.trim().length === 0) {
+            document.getElementById("cnmerr").innerHTML = "Cust name must be greater than 5 characters";
+            return false;
+        } else {
+            document.getElementById("cnmerr").innerHTML = "";
+            return true;
+        }
+    }
+
+    function validateDate() {
+        var d1 = new Date(document.getElementById("bdt").value);
+        var d2 = new Date(document.getElementById("sdt").value);
+        if (d1 > d2) {
+            document.getElementById("dterr").innerHTML = "Billing date must be lesser than shipping date";
+            return false;
+        } else {
+            document.getElementById("dterr").innerHTML = "";
+            return true;
+        }
+    }
+
+    function submit() {
+        var isValidCustomerName = customerName();
+        var isValidDate = validateDate();
+        if (isValidCustomerName && isValidDate) {
+            var num = document.getElementById("num").value;
+            var cnm = document.getElementById("cnm").value;
+            var bdt = document.getElementById("bdt").value;
+            var sdt = document.getElementById("sdt").value;
+            var to = document.getElementById("to").value;
+            var order = new Order(num, cnm, bdt, sdt, to);
+            var tableContent = "<table><tr><th>Field</th><th>Value</th></tr>";
+            tableContent += "<tr><td>Id</td><td>" + order.num + "</td></tr>";
+            tableContent += "<tr><td>Cust name</td><td>" + order.cnm + "</td></tr>";
+            tableContent += "<tr><td>Billing Date</td><td>" + order.bdt + "</td></tr>";
+            tableContent += "<tr><td>Shipping Date</td><td>" + order.sdt + "</td></tr>";
+            tableContent += "<tr><td>Order Total</td><td>" + order.to + "</td></tr>";
+            tableContent += "</table>";
+
+            var newWindow = window.open("", "_blank");
+            newWindow.document.write(tableContent);
+            newWindow.document.close();
+        }
+    }
+</script>
+</head>
+<body>
+    OrderID: <input type="number" name="num" id="num" min="0"><br>
+    Cust Name: <input type="text" name="cnm" id="cnm"> <span id="cnmerr"></span><br>
+    Enter Billing date: <input type="date" name="bdt" id="bdt"><span id="dterr"></span><br>
+    Enter shipping date: <input type="date" name="sdt" id="sdt"><br>
+    Total Order: <input type="number" name="to" id="to" min="0" max="1000"><br>
+    <button type="button" name="btn" id="btn" onclick="submit()">Display</button>
+</body>
+
+<div id="mydiv"></div>
+</html>
