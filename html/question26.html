@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Form</title>
+</head>
+<body>
+  <form id="userForm">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" maxlength="10" required pattern="[A-Za-z]+" title="Only alphabets allowed" />
+    </div>
+    <div>
+      <label for="birthdate">Birth Date:</label>
+      <input type="date" id="birthdate" required />
+    </div>
+    <div>
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" required />
+    </div>
+    <div>
+      <label for="gender">Gender:</label>
+      <input type="radio" id="genderMale" name="gender" value="male" required />
+      <label for="genderMale">Male</label>
+      <input type="radio" id="genderFemale" name="gender" value="female" required />
+      <label for="genderFemale">Female</label>
+    </div>
+    <div>
+      <label for="luckyNumber">Lucky Number:</label>
+      <input type="number" id="luckyNumber" required min="1" max="100" />
+    </div>
+    <div>
+      <label for="favoriteFoods">Favorite Foods:</label>
+      <input type="checkbox" id="foodPizza" name="favoriteFoods" value="pizza" />
+      <label for="foodPizza">Pizza</label>
+      <input type="checkbox" id="foodPasta" name="favoriteFoods" value="pasta" />
+      <label for="foodPasta">Pasta</label>
+      <input type="checkbox" id="foodChinese" name="favoriteFoods" value="chinese" />
+      <label for="foodChinese">Chinese</label>
+    </div>
+    <div>
+      <button type="button" onclick="submitForm()">Send Data</button>
+    </div>
+  </form>
+
+  <div id="userData"></div>
+
+  <script>
+    function submitForm() {
+      var name = document.getElementById("name").value;
+      var birthdate = document.getElementById("birthdate").value;
+      var email = document.getElementById("email").value;
+      var gender = document.querySelector('input[name="gender"]:checked').value;
+      var luckyNumber = document.getElementById("luckyNumber").value;
+      var favoriteFoods = document.querySelectorAll('input[name="favoriteFoods"]:checked');
+
+      if (name && luckyNumber && favoriteFoods.length > 0) {
+        var userData = {
+          name: name,
+          birthdate: birthdate,
+          email: email,
+          gender: gender,
+          luckyNumber: luckyNumber,
+          favoriteFoods: Array.from(favoriteFoods).map(function(food) {
+            return food.value;
+          })
+        };
+
+        // Open a new window and display the user data
+        var userDataWindow = window.open("", "User Data", "width=400,height=300");
+        userDataWindow.document.write("<pre>" + JSON.stringify(userData, null, 2) + "</pre>");
+
+        // Send email to manager's email-id
+        var managerEmail = "yourmanager@example.com";
+        var subject = "User Data for Sanctioning";
+        var body = "Please review the following user data:\n\n" + JSON.stringify(userData, null, 2);
+        var mailToLink = "mailto:" + managerEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+
+        var sendEmailLink = "<a href='" + mailToLink + "' target='_top'>Send Mail</a>";
+        userDataWindow.document.write("<p>" + sendEmailLink + "</p>");
+      } else {
+        alert("Please fill in all the required fields.");
+      }
+    }
+  </script>
+</body>
+</html>
