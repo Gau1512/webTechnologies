@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function computePayment() {
+            
+            var amount = parseFloat(document.getElementById("amount").value);
+            var rate = parseFloat(document.getElementById("rate").value);
+            var repayment = parseInt(document.getElementById("repayment").value);
+
+            
+            if (isNaN(amount) || amount <= 0 || amount > 1500000) {
+                alert("Please enter a valid loan amount (not exceeding 15 lakhs).");
+                return;
+            }
+
+            if (isNaN(rate) || rate <= 0) {
+                alert("Please enter a valid annual percentage rate of interest.");
+                return;
+            }
+
+            if (isNaN(repayment) || repayment < 7 || repayment > 15) {
+                alert("Please enter a valid repayment period (between 7 and 15 years).");
+                return;
+            }
+
+            
+            var monthlyInterest = rate / 100 / 12;
+            var numPayments = repayment * 12;
+            var monthlyPayment = (amount * monthlyInterest) / (1 - Math.pow(1 + monthlyInterest, -numPayments));
+            var totalPayment = monthlyPayment * numPayments;
+            var totalInterest = totalPayment - amount;
+
+            document.getElementById("monthlyPayment").value = monthlyPayment.toFixed(2);
+            document.getElementById("totalPayment").value = totalPayment.toFixed(2);
+            document.getElementById("totalInterest").value = totalInterest.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <h3>Enter Loan Information:</h3>
+    <table>
+        <tr>
+            <td>Amount of the Loan (any currency):</td>
+            <td><input type="text" name="amount" id="amount" required/></td>
+        </tr>
+        <tr>
+            <td>Annual percentage rate of interest:</td>
+            <td><input type="text" name="rate" id="rate" required/></td>
+        </tr>
+        <tr>
+            <td>Repayment in Years:</td>
+            <td><input type="text" name="repayment" id="repayment" required/></td>
+        </tr>
+        <tr>
+            <td><button type="button" name="btn" id="btn" value="compute" onclick="computePayment()">Compute</button></td>
+            <td><h3>Payment Information</h3></td>
+        </tr>
+        <tr>
+            <td>Your monthly payment will be:</td>
+            <td><input type="text" name="monthlyPayment" id="monthlyPayment" readonly/></td>
+        </tr>
+        <tr>
+            <td>Your total payment will be:</td>
+            <td><input type="text" name="totalPayment" id="totalPayment" readonly/></td>
+        </tr>
+        <tr>
+            <td>Your total interest payments will be:</td>
+            <td><input type="text" name="totalInterest" id="totalInterest" readonly/></td>
+        </tr>
+    </table>
+</body>
+</html>
