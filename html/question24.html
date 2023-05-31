@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var error = document.getElementById('error');
+
+            // Validate username
+            if (username.length < 6 || username.length > 10 || !/^[a-zA-Z]+$/.test(username)) {
+                error.textContent = 'Username must be between 6 to 10 characters and should only contain alphabetic characters.';
+                return false;
+            }
+
+            // Validate password
+            if (password.length <= 8 || !/\d/.test(password) || !/#/.test(password)) {
+                error.textContent = 'Password should be greater than 8 characters, must contain a # and at least one digit.';
+                return false;
+            }
+
+            // Clear error message if everything is valid
+            error.textContent = '';
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h2>Login</h2>
+    <form>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div><br/><br/>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <p class="error" id="error"></p>
+        </div>
+        <div>
+            <input type="submit" value="Login" onclick="return validateForm()">
+        </div>
+    </form>
+</body>
+</html>
