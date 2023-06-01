@@ -1,0 +1,35 @@
+
+<html>
+<head>
+  <title>Sum of Digits</title>
+  <script>
+    function calculateSum() {
+      // Get the input value
+      var input = document.getElementById("numberInput").value;
+      
+      // Convert the input to a string
+      var numString = input.toString();
+      
+      // Initialize the sum variable
+      var sum = 0;
+      
+      // Iterate through each digit of the number
+      for (var i = 0; i < numString.length; i++) {
+        // Convert the current digit to an integer and add it to the sum
+        sum += parseInt(numString.charAt(i));
+      }
+      
+      // Display the result in the resultDiv
+      document.getElementById("resultDiv").innerHTML = "Sum of digits: " + sum;
+    }
+  </script>
+</head>
+<body>
+  <h1>Sum of Digits</h1>
+  
+  <input type="text" id="numberInput" placeholder="Enter a five-digit number">
+  <button onclick="calculateSum()">Calculate</button>
+  
+  <div id="resultDiv"></div>
+</body>
+</html>

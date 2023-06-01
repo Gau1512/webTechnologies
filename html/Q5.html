@@ -1,0 +1,24 @@
+
+<html>
+<head>
+  <title>Multiplication Table</title>
+  <script>
+    function printMultiplicationTable(number) {
+      var result = "";
+      for (var i = 1; i <= 10; i++) {
+        result += number + " x " + i + " = " + (number * i) + "<br>";
+      }
+      document.getElementById("multiplicationTable").innerHTML = result;
+    }
+  </script>
+</head>
+<body>
+  <h1>Multiplication Table</h1>
+  <div id="multiplicationTable"></div>
+  
+  <script>
+    var inputNumber = 2;
+    printMultiplicationTable(inputNumber);
+  </script>
+</body>
+</html>
